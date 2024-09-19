@@ -1,0 +1,2 @@
+this is the content of textfile b.
+dont make too much noise just keep it low.

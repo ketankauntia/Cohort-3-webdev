@@ -1,0 +1,11 @@
+.todo-app-container {
+  margin: 2rem 8rem;
+  /* text-align: center; */
+  /* display: block; */
+}
+.todo-block {
+  display: flex;
+}
+.add-note-block {
+  margin: 2rem 8rem;
+}
