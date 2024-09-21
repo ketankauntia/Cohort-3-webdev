@@ -7,6 +7,39 @@ app.use(express.json()); //missed this
 
 let users = [];
 
+// # Assignment: Creating an auth middleware
+// Can you try creating a `middleware` called `auth` that verifies if a user is logged in and ends the request early if the user isn’t logged in?
+
+function authMiddleware(req, res, next) {
+  const token = req.headers.token;
+
+  // if token doesn't exist, not logged in;
+  // if token is right and user exists, logged in
+  // else logged out.
+
+  if (token) {
+    const userDetails = jwt.verify(token, JWT_SECRET);
+
+    const findUser = users.find((u) => u.username === userDetails.username);
+    if (findUser) {
+      //   res.send({
+      //     msg: "User is logged in already",
+      //   });
+      next();
+    } else {
+      res.status(401).send({
+        msg: "user is not logged in",
+      });
+    }
+  } else {
+    res.send({
+      msg: "Not logged in. (token doesn't exist)",
+    });
+  }
+
+  //   next();
+}
+
 app.post("/signup", function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
@@ -57,13 +90,13 @@ app.post("/signin", function (req, res) {
     console.log(`FOUND USER (signin) : ${JSON.stringify(foundUser)}`);
     console.log(`ALL  USERS (signin) : ${JSON.stringify(users)}`);
   } else {
-    res.status(403).send({
+    res.send({
       msg: "Invalid username or Password",
     });
   }
 });
 
-app.get("/me", function (req, res) {
+app.get("/me", authMiddleware, function (req, res) {
   const token = req.headers.token;
   //verify user jwt token via secret_key
   const userDetails = jwt.verify(token, JWT_SECRET);
@@ -78,6 +111,12 @@ app.get("/me", function (req, res) {
       msg: "unauthorized",
     });
   }
+});
+
+app.get("/auth", authMiddleware, function (req, res) {
+  res.send({
+    msg: "Passed through auth middleware",
+  });
 });
 
 app.listen(3000);
