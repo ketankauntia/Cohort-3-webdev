@@ -25,6 +25,7 @@ function authMiddleware(req, res, next) {
       //   res.send({
       //     msg: "User is logged in already",
       //   });
+      req.username = findUser.username; //passing down the user's username since it will be required.
       next();
     } else {
       res.status(401).send({
@@ -97,15 +98,18 @@ app.post("/signin", function (req, res) {
 });
 
 app.get("/me", authMiddleware, function (req, res) {
-  const token = req.headers.token;
-  //verify user jwt token via secret_key
-  const userDetails = jwt.verify(token, JWT_SECRET);
+  //
+  //commented the next 4 lines coz i created authMiddleware and so there is no use of rechecking the credentials.
 
-  const username = userDetails.username;
-  const user = users.find((u) => u.username === username);
+  //   const token = req.headers.token;
+  //   //verify user jwt token via secret_key
+  //   const userDetails = jwt.verify(token, JWT_SECRET);
+
+  //   const username = userDetails.username;
+  const user = users.find((u) => u.username === req.username); // very important. (req.username is used since the jwt token is already validated means there is a user. SO, we pass the user's username via the authmiddleware)
 
   if (user) {
-    res.send({ username: username });
+    res.send({ username: req.username });
   } else {
     res.status(403).send({
       msg: "unauthorized",
