@@ -1,11 +1,16 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "CHALAAA_JAA";
-
+// const cors = require("cors");
 const app = express();
+// app.use(cors());
 app.use(express.json()); //missed this
 
 let users = [];
+
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // # Assignment: Creating an auth middleware
 // Can you try creating a `middleware` called `auth` that verifies if a user is logged in and ends the request early if the user isn’t logged in?
@@ -38,6 +43,7 @@ function authMiddleware(req, res, next) {
     });
   }
 
+  console.log("Signed up");
   //   next();
 }
 
@@ -78,11 +84,11 @@ app.post("/signin", function (req, res) {
   if (foundUser) {
     const token = jwt.sign(
       {
-        username: username,
+        username: foundUser.username,
       },
       JWT_SECRET
     );
-
+    res.header("token", token);
     res.send({
       token: token,
     });
@@ -92,7 +98,7 @@ app.post("/signin", function (req, res) {
     console.log(`ALL  USERS (signin) : ${JSON.stringify(users)}`);
   } else {
     res.send({
-      msg: "Invalid username or Password",
+      msg: "Invalid Credentials",
     });
   }
 });
