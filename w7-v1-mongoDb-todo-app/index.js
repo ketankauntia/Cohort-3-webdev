@@ -4,7 +4,7 @@ const JWT_SECRET = "BholaMaharaj";
 const mongoose = require("mongoose");
 
 //acessing the todo and user model exported from db.js
-const { userModel, todoModel } = require("./db.js");
+const { UserModel, TodoModel } = require("./db.js");
 
 mongoose.connect(
   "mongodb+srv://ketankauntia26:kUpZGqnJKCTE4m1Y@cluster0.jz9ux.mongodb.net/w7-ketan-todo"
@@ -61,17 +61,25 @@ app.post("/signin", async function (req, res) {
 
 app.post("/todo", authMiddleware, function (req, res) {
   const userId = req.userId;
+  const title = req.body.title;
+
+  TodoModel.create({
+    title,
+    userId,
+  });
 
   res.json({
     userId: userId,
   });
 });
 
-app.get("/todos", authMiddleware, function (req, res) {
+app.get("/todos", authMiddleware, async function (req, res) {
   const userId = req.userId;
-
-  res.json({
+  const todos = await TodoModel.find({
     userId: userId,
+  });
+  res.json({
+    todos,
   });
 });
 
