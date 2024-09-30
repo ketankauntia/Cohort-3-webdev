@@ -45,8 +45,8 @@ app.post("/signin", async function (req, res) {
   if (User) {
     const token = jwt.sign(
       {
-        user: User._id, // _id is a unique objectId assigned by mongodb whenever an value is inserted.
-      },
+        user: User._id.toString(), // _id is a unique objectId assigned by mongodb whenever an value is inserted.
+      }, // User._id is not a string but an objectId of a class. So, we need to convert it into a string
       JWT_SECRET
     );
     res.json({
@@ -59,8 +59,35 @@ app.post("/signin", async function (req, res) {
   }
 });
 
-app.post("/todo", function (req, res) {});
+app.post("/todo", authMiddleware, function (req, res) {
+  const userId = req.userId;
 
-app.get("/todos", function (req, res) {});
+  res.json({
+    userId: userId,
+  });
+});
+
+app.get("/todos", authMiddleware, function (req, res) {
+  const userId = req.userId;
+
+  res.json({
+    userId: userId,
+  });
+});
+
+function authMiddleware(req, res, next) {
+  const token = req.headers.token;
+
+  const decodedData = jwt.verify(token, JWT_SECRET);
+  console.log(decodedData);
+  if (decodedData) {
+    req.userId = decodedData.user;
+    next();
+  } else {
+    res.status(403).json({
+      message: "Invalid Token/credentials",
+    });
+  }
+}
 
 app.listen(3000);
