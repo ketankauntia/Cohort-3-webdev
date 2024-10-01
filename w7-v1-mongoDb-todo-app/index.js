@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const { UserModel, TodoModel } = require("./db.js");
 
 mongoose.connect(
-  "mongodb+srv://ketankauntia26:kUpZGqnJKCTE4m1Y@cluster0.jz9ux.mongodb.net/w7-ketan-todo"
+  "mongodb+srv://ketankauntia26:<pass>@cluster0.jz9ux.mongodb.net/w7-ketan-todo"
 );
 
 const app = express();
@@ -18,7 +18,7 @@ app.post("/signup", async function (req, res) {
   const password = req.body.password;
   const name = req.body.name;
 
-  await userModel.create({
+  await UserModel.create({
     //this will give me a promise since it will be an asynchronous fucntion as it will talk to a server in bahrain or some other country and then return me the task done. SO, we shoudls await it.
     name: name,
     password: password,
@@ -34,7 +34,7 @@ app.post("/signin", async function (req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  const User = await userModel.findOne({
+  const User = await UserModel.findOne({
     //since it will hit the db, so we need to wait till we get the user is present or not in the db or are teh credentials valid or not.
     email: email,
     password: password,
