@@ -1,33 +1,16 @@
 const express = require("express");
 const app = express();
+const { createUserRoutes } = require("./routes/userRoute.js");
+const { createUserRoutes } = require("./routes/coursesRoute.js");
+const { createAdminRoutes } = require("./routes/adminRoute.js");
 
 app.use(express.json());
 
+createUserRoutes(app);
+createCoursesRoute(app);
+createAdminRoutes(app);
+
 app.get("/", function (req, res) {
-  res.json({
-    msg: "Hi there",
-  });
-});
-
-app.get("/user/signup", function (req, res) {
-  res.json({
-    msg: "Signed up succesfully",
-  });
-});
-
-app.get("/user/login", function (req, res) {
-  res.json({
-    msg: "Logged in succesfully",
-  });
-});
-
-app.get("/courses/purchase", function (req, res) {
-  res.json({
-    msg: "Hi there",
-  });
-});
-
-app.get("/courses/view", function (req, res) {
   res.json({
     msg: "Hi there",
   });
