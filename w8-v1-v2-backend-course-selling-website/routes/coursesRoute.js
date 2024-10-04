@@ -1,15 +1,16 @@
-function createCoursesRoute(app) {
-  app.get("/courses/purchase", function (req, res) {
-    res.json({
-      msg: "Hi there",
-    });
-  });
+const { Router } = require("express");
+const coursesRouter = Router();
 
-  app.get("/courses/view", function (req, res) {
-    res.json({
-      msg: "Hi there",
-    });
+coursesRouter.get("/courses/purchase", function (req, res) {
+  res.json({
+    msg: "Hi there",
   });
-}
+});
 
-module.exports = { createCoursesRoute: createCoursesRoute };
+coursesRouter.get("/courses/view", function (req, res) {
+  res.json({
+    msg: "Hi there",
+  });
+});
+
+module.exports = { coursesRouter: coursesRouter };

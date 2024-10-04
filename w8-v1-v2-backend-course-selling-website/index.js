@@ -1,19 +1,14 @@
 const express = require("express");
 const app = express();
-const { createUserRoutes } = require("./routes/userRoute.js");
-const { createUserRoutes } = require("./routes/coursesRoute.js");
-const { createAdminRoutes } = require("./routes/adminRoute.js");
+
+const { userRouter } = require("./routes/userRoute.js");
+const { coursesRouter } = require("./routes/coursesRoute.js");
+const { adminRouter } = require("./routes/adminRoute.js");
 
 app.use(express.json());
 
-createUserRoutes(app);
-createCoursesRoute(app);
-createAdminRoutes(app);
-
-app.get("/", function (req, res) {
-  res.json({
-    msg: "Hi there",
-  });
-});
+app.use("/user", userRouter);
+app.use("/courses", coursesRouter);
+app.use("/admin", adminRouter);
 
 app.listen(3000);

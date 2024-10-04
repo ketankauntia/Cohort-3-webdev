@@ -1,23 +1,25 @@
-function createUserRoutes(app) {
-  app.post("/user/signup", function (req, res) {
-    res.json({
-      msg: "Signed up succesfully",
-    });
-  });
+const { Router } = require("express");
 
-  app.post("/user/purchases", function (req, res) {
-    res.json({
-      msg: "Signed up succesfully",
-    });
-  });
+const userRouter = Router();
 
-  app.post("/user/login", function (req, res) {
-    res.json({
-      msg: "Logged in succesfully",
-    });
+userRouter.post("/user/signup", function (req, res) {
+  res.json({
+    msg: "Signed up succesfully",
   });
-}
+});
+
+userRouter.post("/user/purchases", function (req, res) {
+  res.json({
+    msg: "Signed up succesfully",
+  });
+});
+
+userRouter.post("/user/login", function (req, res) {
+  res.json({
+    msg: "Logged in succesfully",
+  });
+});
 
 module.exports = {
-  createUserRoutes: createUserRoutes,
+  userRouter: userRouter,
 };
