@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const userRouter = Router();
 
-userRouter.post("/signup", function (req, res) {
+userRouter.post("/signup", async function (req, res) {
   const requiredBody = z.object({
     email: z.string().min(5).max(50),
     firstName: z.string().min(5).max(25),
@@ -23,17 +23,29 @@ userRouter.post("/signup", function (req, res) {
     return;
   }
   //todo: hashing the password & then working on the hashed password
+  let errorThrown = false;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 5);
 
-  userModel.create({
-    email,
-    firstName,
-    lastName,
-    password,
-  });
+    await userModel.create({
+      email,
+      firstName,
+      lastName,
+      password,
+    });
+  } catch (e) {
+    console.log(`error: ${e}`);
+    res.json({
+      error: e,
+    });
+    errorThrown = true;
+  }
 
-  res.json({
-    msg: "Signed up succesfully",
-  });
+  if (!errorThrown) {
+    res.json({
+      msg: "Signed up succesfully",
+    });
+  }
 });
 
 userRouter.get("/purchases", function (req, res) {
