@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const coursesRouter = Router();
 
-coursesRouter.get("/courses/purchase", function (req, res) {
+coursesRouter.post("/courses/purchase", function (req, res) {
   res.json({
     msg: "Hi there",
   });

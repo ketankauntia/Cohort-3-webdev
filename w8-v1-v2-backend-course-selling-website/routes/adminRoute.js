@@ -14,7 +14,7 @@ adminRouter.post("/signup", function (req, res) {
   });
 });
 
-adminRouter.post("/create-course", function (req, res) {
+adminRouter.put("/create-course", function (req, res) {
   res.json({
     msg: "signed in succesfully as admin",
   });
