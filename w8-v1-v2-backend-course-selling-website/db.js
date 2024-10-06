@@ -1,6 +1,10 @@
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema();
-const ObjectId = mongoose.ObjectId();
+const ObjectId = Schema.ObjectId();
+
+mongoose.connect("process.env.MONGOOSE_URL");
 
 // user, admin, course, purchase
 const userSchema = new Schema({
@@ -18,14 +22,26 @@ const adminSchema = new Schema({
 });
 
 const coursesSchema = new Schema({
-  courseTitle: String,
-  courseDetails: String,
-  coruseImage: String,
-  coursePrice: String,
-  courseCreatorId: ObjectId, //to be taken from adminSchema (admin schema is the creator id, like which admin has created the course)
+  title: String,
+  description: String,
+  imageUrl: String,
+  price: Number,
+  creatorId: ObjectId, //to be taken from adminSchema (admin schema is the creator id, like which admin has created the course)
 });
 
 const purchasesSchema = new Schema({
   courseId: ObjectId,
   userId: ObjectId,
 });
+
+const userModel = mongoose.model("user", userSchema);
+const adminModel = mongoose.model("admin", adminSchema);
+const coursesModel = mongoose.model("courses", coursesSchema);
+const purchasesModel = mongoose.model("purchases", purchasesSchema);
+
+module.exports = {
+  userModel,
+  coursesModel,
+  adminModel,
+  purchasesModel,
+};
