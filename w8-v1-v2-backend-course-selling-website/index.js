@@ -2,6 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const { z } = require("zod");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
 dotenv.config();
 const app = express();
 
@@ -13,9 +17,9 @@ const { adminRouter } = require("./routes/adminRoute.js");
 
 app.use(express.json());
 
-app.use("api/v1/user", userRouter);
-app.use("api/v1/courses", coursesRouter);
-app.use("api/v1/admin", adminRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/courses", coursesRouter);
+app.use("/api/v1/admin", adminRouter);
 
 //we made this async-await function so that, we first connect to the db and then listen on the server/backend.
 //if the db connection gives us an error, then the app crashes
