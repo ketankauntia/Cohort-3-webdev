@@ -1,23 +1,20 @@
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema();
-const ObjectId = Schema.ObjectId();
-
-mongoose.connect("process.env.MONGOOSE_URL");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 // user, admin, course, purchase
 const userSchema = new Schema({
   firstName: String,
   lastName: String,
-  email: { value: String, unique: true },
+  email: { type: String, unique: true },
   password: String,
 });
 
 const adminSchema = new Schema({
   firstName: String,
   lastName: String,
-  email: { value: String, unique: true },
+  email: { type: String, unique: true },
   password: String,
 });
 
