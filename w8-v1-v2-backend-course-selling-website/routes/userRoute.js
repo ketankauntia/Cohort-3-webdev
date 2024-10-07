@@ -57,15 +57,28 @@ userRouter.post("/signup", async function (req, res) {
   }
 });
 
-userRouter.get("/purchases", function (req, res) {
+userRouter.post("/signin", async function (req, res) {
+  const { email, password } = req.body;
+
+  //convert the password into hashedpassword,
+  const hashedPassword = await bcrypt.hash(password, 5);
+  console.log(`Hashed password : ${hashedPassword}`);
+
+  //check both the details in the usermodel after it from the db
+  const user = await userModel.findOne({
+    email,
+    password,
+  });
+  console.log(`Found User : ${user}`);
+
   res.json({
-    msg: "Signed up succesfully",
+    msg: "Logged in succesfully",
   });
 });
 
-userRouter.post("/login", function (req, res) {
+userRouter.get("/purchases", function (req, res) {
   res.json({
-    msg: "Logged in succesfully",
+    msg: "Signed up succesfully",
   });
 });
 
