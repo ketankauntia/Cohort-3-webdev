@@ -60,20 +60,31 @@ userRouter.post("/signup", async function (req, res) {
 userRouter.post("/signin", async function (req, res) {
   const { email, password } = req.body;
 
-  //convert the password into hashedpassword,
-  const hashedPassword = await bcrypt.hash(password, 5);
-  console.log(`Hashed password : ${hashedPassword}`);
+  try {
+    // find if user exists by searching for its email in db entry
+    const foundUser = await userModel.findOne({
+      email,
+    });
+    // then, compare the plaintext password to the hashedpassword from db,
+    if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
+      //issue the token via _userId
+      const token = jwt.sign(
+        {
+          id: foundUser._id,
+        },
+        process.env.JWT_SECRET
+      );
+      console.log(token);
+    }
 
-  //check both the details in the usermodel after it from the db
-  const user = await userModel.findOne({
-    email,
-    password,
-  });
-  console.log(`Found User : ${user}`);
-
-  res.json({
-    msg: "Logged in succesfully",
-  });
+    res.json({
+      msg: "Logged in succesfully",
+      token,
+    });
+  } catch (error) {
+    console.log("Error during sign-in:", error);
+    return res.status(500).json({ message: "Internal server error", error });
+  }
 });
 
 userRouter.get("/purchases", function (req, res) {
