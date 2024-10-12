@@ -75,12 +75,16 @@ userRouter.post("/signin", async function (req, res) {
         process.env.JWT_SECRET
       );
       console.log(token);
-    }
 
-    res.json({
-      msg: "Logged in succesfully",
-      token,
-    });
+      res.json({
+        msg: "Logged in succesfully",
+        token,
+      });
+    } else {
+      res.json({
+        message: "Invalid Credentials.Couldn't sign-in",
+      });
+    }
   } catch (error) {
     console.log("Error during sign-in:", error);
     return res.status(500).json({ message: "Internal server error", error });
