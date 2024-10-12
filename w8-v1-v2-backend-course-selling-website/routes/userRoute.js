@@ -2,7 +2,9 @@ const { Router } = require("express");
 const { z } = require("zod");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
 const userRouter = Router();
+
 const { userModel } = require("../db"); // Adjust the path as per your folder structure
 const { userAuthMiddleware } = require("../userMiddleware");
 
@@ -58,6 +60,7 @@ userRouter.post("/signup", async function (req, res) {
   }
 });
 
+//cookie logic for later
 userRouter.post("/signin", async function (req, res) {
   const { email, password } = req.body;
 
@@ -75,7 +78,7 @@ userRouter.post("/signin", async function (req, res) {
         },
         process.env.JWT_SECRET
       );
-      console.log(token);
+      // console.log(token);
 
       res.json({
         msg: "Logged in succesfully",
