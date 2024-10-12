@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const { adminModel } = require("../db.js");
+const { adminAuthMiddlware } = require("../adminMiddleware.js");
 
 // admin login, admin signup, create a course, delete a course, add course content
 
@@ -77,6 +78,8 @@ adminRouter.post("/signin", async function (req, res) {
     });
   }
 });
+
+application.use(adminAuthMiddlware);
 
 adminRouter.put("/create-course", function (req, res) {
   res.json({
