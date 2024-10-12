@@ -12,6 +12,8 @@ function adminAuthMiddleware(req, res, next) {
   try {
     const verifedToken = jwt.verify(token, process.env.JWT_SECRET_KEY_ADMIN);
     if (verifedToken) {
+      // setting the userId field into the req object.So, from now on, id of the user can be accessed from req.userId property
+      req.userId = verifedToken.id; //[IMP] To pass the user details via the token to the authenticated endpoints
       next();
     } else {
       res.status(403).json({

@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const userRouter = Router();
 
 const { userModel } = require("../db"); // Adjust the path as per your folder structure
-const { userAuthMiddleware } = require("../userMiddleware");
+const { userAuthMiddleware } = require("../middlewares/userMiddleware.js");
 
 userRouter.post("/signup", async function (req, res) {
   // console.log(`${req.body}`);

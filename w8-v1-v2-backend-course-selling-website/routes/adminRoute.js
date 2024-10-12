@@ -5,8 +5,8 @@ const { z } = require("zod");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const { adminModel } = require("../db.js");
-const { adminAuthMiddleware } = require("../adminMiddleware.js");
+const { adminModel, coursesModel } = require("../db.js");
+const { adminAuthMiddleware } = require("../middlewares/adminMiddleware.js");
 
 // admin login, admin signup, create a course, delete a course, add course content
 
@@ -86,10 +86,59 @@ adminRouter.post("/signin", async function (req, res) {
 
 adminRouter.use(adminAuthMiddleware);
 
-adminRouter.put("/create-course", function (req, res) {
-  res.json({
-    msg: "In admin /create-course",
+adminRouter.put("/create-course", async function (req, res) {
+  const adminID = req.userId; //passed down from adminMiddlware
+
+  const courseDetailsRequiredBody = z.object({
+    title: z.string().min(3).max(100),
+    description: z.string().min(3).max(100),
+    imageUrl: z.string().min(3).max(100),
+    price: z.number().min(1).max(100000000), //max(100000000) is the actual value ~10cr
+    // creatorId: z.string().max(150), //adminId will direcly be added via model
   });
+
+  const courseDetailsParsedBody = courseDetailsRequiredBody.safeParse(req.body);
+
+  if (!courseDetailsParsedBody.success) {
+    res.status(403).json({
+      message: "Enter correct course details",
+      error: courseDetailsParsedBody.error,
+    });
+    return;
+  }
+
+  // courseDetailsParsedBody : {"success":true,"data":{"title":"100xDevs Cohort 1","description":"Complete webdev cohort from zero to one","imageUrl":"https://www.google.com/","price":7,"creatorId":"670a58f8c59a741240918097"}}
+
+  const { title, description, imageUrl, price, creatorId } =
+    courseDetailsParsedBody.data;
+
+  console.log(
+    `courseDetailsParsedBody : ${JSON.stringify(courseDetailsParsedBody.data)}`
+  );
+
+  //adding new course data to the db via the course model.
+  let errorThrown = false;
+  try {
+    await coursesModel.create({
+      title,
+      description,
+      imageUrl,
+      price,
+      creatorId: adminID,
+    });
+    console.log(`Course details added to db`);
+  } catch (e) {
+    errorThrown = true;
+    res.json({
+      msg: "Error while uploading course details to the db",
+      error: e.message,
+    });
+  }
+  if (!errorThrown) {
+    res.json({
+      msg: "In admin /create-course & course added :)",
+    });
+  }
 });
 
 adminRouter.delete("/delete-course", function (req, res) {
