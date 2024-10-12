@@ -1,6 +1,8 @@
+const jwt = require("jsonwebtoken");
+
 function adminAuthMiddleware(req, res, next) {
   const token = req.headers.token;
-
+  console.log(`token from admin authMiddleware : ${token}`);
   if (!token) {
     res.status(403).json({
       message: "Please sign in. Token doesn't exists",
@@ -8,7 +10,7 @@ function adminAuthMiddleware(req, res, next) {
   }
 
   try {
-    const verifedToken = jwt.verify(token, process.env.JWT_SECRECT_KEY_ADMIN);
+    const verifedToken = jwt.verify(token, process.env.JWT_SECRET_KEY_ADMIN);
     if (verifedToken) {
       next();
     } else {
@@ -18,8 +20,7 @@ function adminAuthMiddleware(req, res, next) {
     }
   } catch (e) {
     res.status(403).json({
-      message: "AdminAuth Error",
-      error: e.message,
+      message: e.message,
     });
   }
 }

@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const { adminModel } = require("../db.js");
-const { adminAuthMiddlware } = require("../adminMiddleware.js");
+const { adminAuthMiddleware } = require("../adminMiddleware.js");
 
 // admin login, admin signup, create a course, delete a course, add course content
 
@@ -67,6 +67,11 @@ adminRouter.post("/signin", async function (req, res) {
         },
         process.env.JWT_SECRET_KEY_ADMIN
       );
+
+      res.json({
+        message: "Signed in succesfully",
+        token,
+      });
     } else {
       res.status(403).json({
         message: "Invalid Credentials",
@@ -79,23 +84,23 @@ adminRouter.post("/signin", async function (req, res) {
   }
 });
 
-application.use(adminAuthMiddlware);
+adminRouter.use(adminAuthMiddleware);
 
 adminRouter.put("/create-course", function (req, res) {
   res.json({
-    msg: "signed in succesfully as admin",
+    msg: "In admin /create-course",
   });
 });
 
 adminRouter.delete("/delete-course", function (req, res) {
   res.json({
-    msg: "signed in succesfully as admin",
+    msg: "In admin /delete-course",
   });
 });
 
 adminRouter.post("/edit-course-content", function (req, res) {
   res.json({
-    msg: "signed in succesfully as admin",
+    msg: "In admin /edit-course-content",
   });
 });
 
