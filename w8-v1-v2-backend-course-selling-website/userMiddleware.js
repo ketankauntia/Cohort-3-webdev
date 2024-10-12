@@ -1,19 +1,31 @@
+const jwt = require("jsonwebtoken");
+
 function userAuthMiddleware(req, res, next) {
-  const username = req.body.username;
-  const password = req.body.password;
+  // console.log("In userMiddleware.js");
 
-  const foundUser = userModel.findOne((u) => u.username === username);
+  //we will get the token from the user and validate/authenticate from that token
 
-  if (foundUser) {
-    res.json("Signin Successfull");
-  } else {
-    res.json("Credentials invalid, Signup declined");
+  const token = req.headers.token; //we get the jwt token from the headers
+  console.log(token);
+
+  if (!token) {
+    res.status(403).json({
+      message: "Please sigin first. Token doesn't exist",
+    });
   }
-  //   res.json({
-  //     msg: "User Middleware",
-  //   });
+
+  try {
+    const validToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    next();
+  } catch (e) {
+    res.status(403).json({
+      // message: "Auth issue from the userAuthMiddleware",
+      message: e.message,
+    });
+  }
 }
 
-module.exports({
+module.exports = {
   userAuthMiddleware,
-});
+};

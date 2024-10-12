@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userRouter = Router();
 const { userModel } = require("../db"); // Adjust the path as per your folder structure
+const { userAuthMiddleware } = require("../userMiddleware");
 
 userRouter.post("/signup", async function (req, res) {
   // console.log(`${req.body}`);
@@ -91,9 +92,11 @@ userRouter.post("/signin", async function (req, res) {
   }
 });
 
+userRouter.use(userAuthMiddleware);
+
 userRouter.get("/purchases", function (req, res) {
   res.json({
-    msg: "Signed up succesfully",
+    msg: "All Purchases here",
   });
 });
 
