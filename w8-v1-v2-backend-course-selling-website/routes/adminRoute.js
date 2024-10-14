@@ -112,44 +112,57 @@ adminRouter.put("/create-course", async function (req, res) {
   const { title, description, imageUrl, price, creatorId } =
     courseDetailsParsedBody.data;
 
-  console.log(
-    `courseDetailsParsedBody : ${JSON.stringify(courseDetailsParsedBody.data)}`
-  );
+  // console.log(
+  //   `courseDetailsParsedBody : ${JSON.stringify(courseDetailsParsedBody.data)}`
+  // );
 
   //adding new course data to the db via the course model.
-  let errorThrown = false;
+  // let errorThrown = false;
   try {
-    await coursesModel.create({
+    const course = await coursesModel.create({
       title,
       description,
       imageUrl,
       price,
       creatorId: adminID,
     });
+
     console.log(`Course details added to db`);
+
+    res.json({
+      msg: "In admin /create-course & course added :)",
+      courseId: course._id,
+    });
   } catch (e) {
-    errorThrown = true;
+    // errorThrown = true;
     res.json({
       msg: "Error while uploading course details to the db",
       error: e.message,
     });
   }
-  if (!errorThrown) {
-    res.json({
-      msg: "In admin /create-course & course added :)",
+});
+
+adminRouter.put("/edit-course-content", function (req, res) {
+  const courseUpdateDeatils = z.object({
+    title: z.string().min(3).max(100).optional(),
+    description: z.string().min(3).max(100).optional(),
+    imageUrl: z.string().min(3).max(100).optional(),
+    price: z.number().min(1).max(100000000).optional(),
+    courseId: z.string().max(100), //mandatory, to know which course to update
+  });
+
+  const courseUpdateDeatilsParsed = courseUpdateDeatils.safeParse(req.body);
+
+  if (!courseUpdateDeatilsParsed.success) {
+    res.status(403).json({
+      message: "Input valid details",
     });
   }
 });
 
-adminRouter.delete("/delete-course", function (req, res) {
+adminRouter.delete("/get-all-courses", function (req, res) {
   res.json({
-    msg: "In admin /delete-course",
-  });
-});
-
-adminRouter.post("/edit-course-content", function (req, res) {
-  res.json({
-    msg: "In admin /edit-course-content",
+    msg: "In admin /get-all-courses",
   });
 });
 
