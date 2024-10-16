@@ -142,7 +142,7 @@ adminRouter.put("/create-course", async function (req, res) {
   }
 });
 
-adminRouter.put("/edit-course-content", function (req, res) {
+adminRouter.put("/edit-course-content", async function (req, res) {
   const courseUpdateDeatils = z.object({
     title: z.string().min(3).max(100).optional(),
     description: z.string().min(3).max(100).optional(),
@@ -157,7 +157,50 @@ adminRouter.put("/edit-course-content", function (req, res) {
     res.status(403).json({
       message: "Input valid details",
     });
+    return;
   }
+
+  // console.log(courseUpdateDeatilsParsed);
+  // {
+  //   success: true,
+  //   data: {
+  //     title: 'test course Title Updated',
+  //     description: 'Updated test course',
+  //     courseId: '670cbbac6677a5ed254e0e76'
+  //   }
+  // }
+
+  try {
+    //check if the course dosn't exists. give error.
+    const validCourseId = coursesModel.findById(courseId);
+    if (!validCourseId) {
+      return res.status(404).json({
+        message: "Course not found",
+      });
+    }
+
+    // couldn't derive logic -> took help from gpt
+    const updatedCourse = await coursesModel.findByIdAndUpdate(
+      courseId,
+      updateData,
+      {
+        new: true, // Returns the updated document
+      }
+    );
+
+    res.json({
+      message: "Course content updated successfully",
+      updatedCourse,
+    });
+  } catch (e) {
+    res.json({
+      message: "Invalid course details",
+    });
+  }
+
+  res.json({
+    message: "course updated",
+  });
 });
 
 adminRouter.delete("/get-all-courses", function (req, res) {
