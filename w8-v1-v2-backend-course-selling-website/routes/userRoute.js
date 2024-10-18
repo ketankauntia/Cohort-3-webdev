@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const userRouter = Router();
 
-const { userModel } = require("../db"); // Adjust the path as per your folder structure
+const { userModel, purchasesModel, coursesModel } = require("../db"); // Adjust the path as per your folder structure
 const { userAuthMiddleware } = require("../middlewares/userMiddleware.js");
 
 userRouter.post("/signup", async function (req, res) {
@@ -97,9 +97,26 @@ userRouter.post("/signin", async function (req, res) {
 
 userRouter.use(userAuthMiddleware);
 
-userRouter.get("/purchases", function (req, res) {
+userRouter.get("/purchases", async function (req, res) {
+  const userId = req.userId;
+
+  const purchases = await purchasesModel.find({
+    userId,
+  });
+
+  let purchasedCourseIds = [];
+
+  for (let i = 0; i < purchases.length; i++) {
+    purchasedCourseIds.push(purchases[i].courseId);
+  }
+  const coursesData = await coursesModel.find({
+    _id: { $in: purchasedCourseIds },
+  });
+
   res.json({
     msg: "All Purchases here",
+    purchases,
+    coursesData,
   });
 });
 

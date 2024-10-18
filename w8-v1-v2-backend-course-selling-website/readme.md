@@ -9,3 +9,5 @@
 - Add middlewares for user and admin auth
 - Define the schema for User, Admin, Course, Purchase
 - Complete the routes for user login, signup, purchase a course, see course
+
+TO RUN (in dev.) : npm run dev
