@@ -1,3 +1,4 @@
+const express = require("express");
 const { Router } = require("express");
 const adminRouter = Router();
 
@@ -8,6 +9,7 @@ const bcrypt = require("bcrypt");
 const { adminModel, coursesModel } = require("../db.js");
 const { adminAuthMiddleware } = require("../middlewares/adminMiddleware.js");
 
+adminRouter.use(express.json());
 // admin login, admin signup, create a course, delete a course, add course content
 
 adminRouter.post("/signup", async function (req, res) {
@@ -143,6 +145,8 @@ adminRouter.put("/create-course", async function (req, res) {
 });
 
 adminRouter.put("/edit-course-content", async function (req, res) {
+  const creatorIdFromToken = req.userId; //userId from the JWT token -> passed by adminMiddleware
+
   const courseUpdateDeatils = z.object({
     title: z.string().min(3).max(100).optional(),
     description: z.string().min(3).max(100).optional(),
@@ -160,6 +164,7 @@ adminRouter.put("/edit-course-content", async function (req, res) {
     return;
   }
 
+  // {
   // console.log(courseUpdateDeatilsParsed);
   // {
   //   success: true,
@@ -173,13 +178,28 @@ adminRouter.put("/edit-course-content", async function (req, res) {
   try {
     const { courseId, ...updateData } = courseUpdateDeatilsParsed.data;
 
+    // console.log("Parsed courseId:", courseId);
+
     //check if the course dosn't exists. give error.
     const validCourseId = await coursesModel.findById(courseId);
-    console.log(`Valid COurse Id : ${validCourseId}`);
+
+    // console.log(`Valid Course Id : ${validCourseId}`);
 
     if (!validCourseId) {
       return res.status(404).json({
         message: "Course not found",
+      });
+    }
+
+    // Log both IDs for debugging
+    // console.log("Course Creator ID:", validCourseId.creatorId.toString());
+    // console.log("User ID from Token:", creatorIdFromToken);
+
+    //checking if the real creator of the course is updating the course and not some random creator
+
+    if (validCourseId.creatorId.toString() !== creatorIdFromToken) {
+      return res.status(403).json({
+        message: "Unauthorized as you are not the creator of this course",
       });
     }
 
@@ -199,6 +219,7 @@ adminRouter.put("/edit-course-content", async function (req, res) {
   } catch (e) {
     res.json({
       message: "Invalid course details",
+      error: e.message,
     });
   }
 
@@ -207,9 +228,16 @@ adminRouter.put("/edit-course-content", async function (req, res) {
   // });
 });
 
-adminRouter.delete("/get-all-courses", function (req, res) {
+adminRouter.get("/get-all-courses", async function (req, res) {
+  const adminId = req.userId;
+
+  const courses = await coursesModel.find({
+    creatorId: adminId,
+  });
+
   res.json({
-    msg: "In admin /get-all-courses",
+    message: "All Courses here",
+    courses,
   });
 });
 
