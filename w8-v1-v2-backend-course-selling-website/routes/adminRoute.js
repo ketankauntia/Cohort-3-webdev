@@ -154,7 +154,7 @@ adminRouter.put("/edit-course-content", async function (req, res) {
   const courseUpdateDeatilsParsed = courseUpdateDeatils.safeParse(req.body);
 
   if (!courseUpdateDeatilsParsed.success) {
-    res.status(403).json({
+    res.status(400).json({
       message: "Input valid details",
     });
     return;
@@ -171,8 +171,12 @@ adminRouter.put("/edit-course-content", async function (req, res) {
   // }
 
   try {
+    const { courseId, ...updateData } = courseUpdateDeatilsParsed.data;
+
     //check if the course dosn't exists. give error.
-    const validCourseId = coursesModel.findById(courseId);
+    const validCourseId = await coursesModel.findById(courseId);
+    console.log(`Valid COurse Id : ${validCourseId}`);
+
     if (!validCourseId) {
       return res.status(404).json({
         message: "Course not found",
@@ -198,9 +202,9 @@ adminRouter.put("/edit-course-content", async function (req, res) {
     });
   }
 
-  res.json({
-    message: "course updated",
-  });
+  // res.json({
+  //   message: "course updated",
+  // });
 });
 
 adminRouter.delete("/get-all-courses", function (req, res) {
