@@ -1,5 +1,12 @@
+import { useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
 function App() {
   return (
@@ -18,6 +25,7 @@ function App() {
             element={<Class12program />}
           />
           <Route path="/" element={<Landing />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -33,7 +41,27 @@ function Class11program() {
 }
 
 function Class12program() {
+  const navigate = useNavigate();
+
+  console.log("outside useEffect");
+  useEffect(function () {
+    console.log("In useEffect");
+    const intervalId = setInterval(function () {
+      console.log("In setInterval");
+      navigate("/");
+    }, 5000);
+
+    return function () {
+      clearInterval(intervalId);
+      console.log("Unmounted setInterval");
+    };
+  }, []);
+
   return <div>This is the class 12th page</div>;
+}
+
+function ErrorPage() {
+  return <div>Error : Page doesnt exist</div>;
 }
 
 export default App;
