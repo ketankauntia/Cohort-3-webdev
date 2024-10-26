@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useRef, useState } from "react";
+import { useFetch, usePostTitle } from "../hooks/usePostTitle.js";
+import { useDebounce } from "../hooks/useDebounce.js";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [inputVal, setInputVal] = useState("");
+  const debouncedValue = useRef(inputVal, 200);
+
+  function change(e) {
+    setInputVal(e.target.value);
+  }
+
+  useEffect(() => {
+    console.log("Expensive operation done");
+  }, [debouncedValue]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <input type="text" onChange={change}></input>
     </>
-  )
+  );
 }
 
-export default App
+// function App() {
+//   const { postData } = usePostTitle();
+
+//   const [currentPost, setCurrentPost] = useState(1);
+//   const { details, loading } = useFetch(
+//     "https://jsonplaceholder.typicode.com/todos/" + currentPost
+//   );
+
+//   if (loading) {
+//     return <div>Loading....</div>;
+//   }
+
+//   return (
+//     <div>
+//       <button onClick={() => setCurrentPost(1)}>Post 1</button>
+//       <button onClick={() => setCurrentPost(2)}>Post 2</button>
+//       <button onClick={() => setCurrentPost(3)}>Post 3</button>
+//       <div>{JSON.stringify(details)}</div>;
+//     </div>
+//   );
+// }
+
+// import { useState } from "react";
+
+// //custom hook
+// function useCounter() {
+//   const [count, setCount] = useState(0);
+
+//   function increaseCount() {
+//     setCount((count) => count + 1);
+//   }
+//   return { count, increaseCount };
+// }
+
+// function App() {
+//   const { count, increaseCount } = useCounter();
+
+//   return <button onClick={increaseCount}>Increase {count}</button>;
+// }
+
+export default App;
