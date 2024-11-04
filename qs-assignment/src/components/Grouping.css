@@ -1,0 +1,45 @@
+.grouping {
+  padding: 16px 4px;
+  width: 350px;
+  position: relative;
+  align-items: center;
+}
+
+.grouping-container {
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-left {
+  display: flex;
+  align-items: center;
+}
+
+.group-left span {
+  margin-right: 5px;
+}
+
+.group-right {
+  display: flex;
+  align-items: center;
+}
+
+.group-right span {
+  margin-right: 5px;
+}
+
+.group-left img {
+  margin-right: 5px; /* Add margin between icon and text */
+}
+
+.count-cards {
+  margin-left: 6px;
+}
+
+.group-right img {
+  margin-left: 8px;
+}

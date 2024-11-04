@@ -1,21 +1,10 @@
 import React from "react";
-import "./Card.css"; // Make sure to create a CSS file for styling
+import "./Card.css";
 
-const sampleTicket = {
-  id: "CAM-11",
-  title: "Conduct Security Vulnerability Assessment",
-  priority: 3,
-  type: "Feature Request",
-  assignedUser: {
-    name: "John Doe",
-    avatarUrl: "https://example.com/avatar.jpg",
-  },
-};
+const TicketCard = ({ ticket, users }) => {
+  const { id, title, priority, tag, userId } = ticket;
 
-const TicketCard = ({ ticket }) => {
-  const { id, title, priority, type, assignedUser } = sampleTicket;
-
-  // Priority level badges
+  const assignedUser = users.find((user) => user.id === userId);
   const priorityLabels = ["No priority", "Low", "Medium", "High", "Urgent"];
   const priorityClasses = ["no-priority", "low", "medium", "high", "urgent"];
 
@@ -25,18 +14,23 @@ const TicketCard = ({ ticket }) => {
       <div className="ticket-title">{title}</div>
 
       <div className="ticket-meta">
-        {/* Priority badge */}
         <div className={`priority-badge ${priorityClasses[priority]}`}>
-          {priority === 4 ? "!" : null}
+          {priorityLabels[priority]}
         </div>
-
-        {/* Type badge */}
-        <div className="type-badge">{type}</div>
+        <div className="type-badge">{tag[0]}</div>
       </div>
 
       {/* User Avatar */}
       <div className="ticket-avatar">
-        <img src={assignedUser?.avatarUrl} alt={assignedUser?.name} />
+        {assignedUser && (
+          <>
+            <img
+              src={assignedUser.avatarUrl || "default-avatar.jpg"}
+              alt={assignedUser.name}
+            />
+            <div className="assigned-user-name">{assignedUser.name}</div>
+          </>
+        )}
       </div>
     </div>
   );

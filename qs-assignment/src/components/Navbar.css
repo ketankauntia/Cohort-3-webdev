@@ -8,7 +8,14 @@
 }
 
 .header-option {
+  display: flex; /* Add display: flex to align items horizontally */
+  align-items: center; /* Align items vertically */
   border: 1px solid black;
   border-radius: 7px;
   padding: 4px 10px;
+}
+
+.header-option span {
+  margin-right: 5px; /* Add margin between icon and text */
+  margin-left: 5px; /* Add margin between text and dropdown icon */
 }

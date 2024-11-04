@@ -1,14 +1,11 @@
 import "./Canvas.css";
 import Block from "./Block";
 
-function Canvas() {
+function Canvas({ data }) {
   return (
-    <div class="canvas">
-      <div class="canvas-container">
-        <Block />
-        <Block />
-        <Block />
-        <Block />
+    <div className="canvas">
+      <div className="canvas-container">
+        <Block data={data} />
       </div>
     </div>
   );

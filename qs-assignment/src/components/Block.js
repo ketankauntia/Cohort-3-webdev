@@ -1,11 +1,15 @@
 import "./Block.css";
 import Card from "./Card";
+import Grouping from "./Grouping";
 
-function Block() {
+function Block({ data }) {
   return (
-    <div class="block">
-      <div class="single-block">
-        <Card />
+    <div className="block">
+      <div className="single-block">
+        <Grouping data={data} />
+        {data.tickets.map((ticket) => (
+          <Card key={ticket.id} ticket={ticket} users={data.users} />
+        ))}
       </div>
     </div>
   );
