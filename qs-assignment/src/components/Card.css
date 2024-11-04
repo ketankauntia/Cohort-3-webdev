@@ -1,0 +1,85 @@
+.ticket-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  position: relative;
+}
+
+.ticket-id {
+  font-size: 0.5rem;
+  color: #777;
+  font-weight: 500;
+}
+
+.ticket-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Priority Badge */
+.priority-badge {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.no-priority {
+  background-color: #cccccc;
+}
+.low {
+  background-color: #6c757d;
+}
+.medium {
+  background-color: #ffc107;
+}
+.high {
+  background-color: #dc3545;
+}
+.urgent {
+  background-color: #ff0000;
+}
+
+/* Type Badge */
+.type-badge {
+  font-size: 0.9rem;
+  color: #666;
+  padding: 4px 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+/* Avatar */
+.ticket-avatar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.ticket-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

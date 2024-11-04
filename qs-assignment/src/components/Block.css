@@ -1,0 +1,9 @@
+.block {
+  margin: 3.5rem;
+}
+
+.single-block {
+  height: 10rem;
+  /* border: 1px solid black; */
+  width: 17rem;
+}
