@@ -3,15 +3,17 @@ import "./App.css";
 function App() {
   return (
     <>
-      <div className="grid grid-cols-3 sm:grid-cols-12 ">
-        <div className="bg-green-700 text-white col-span-3 sm:col-span-4">
-          hi there from 1st div
+      <div className="main-container  bg-blue-700 text-center">
+        <div className="logo text-4xl text-white">Webinar.gg</div>
+        <div className="heading text-white text-2xl font-semibold">
+          Verify Your Age
         </div>
-        <div className="bg-red-600 text-white col-span-3 sm:col-span-4">
-          hi there from 2nd div
-        </div>
-        <div className="bg-pink-300 text-white col-span-3 sm:col-span-4">
-          hi there from 3rd div
+        <div className="input-block">
+          <div className="txt-line text-gray-400">
+            Please Confirm your birth year. This data will not be stored.
+          </div>
+          <input type="number text-white"></input>
+          <div className="btn-comp text-white">Continue</div>
         </div>
       </div>
     </>
