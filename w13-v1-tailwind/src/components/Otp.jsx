@@ -65,6 +65,7 @@ export function Otp() {
       <SubOtpBox
         reference={ref6}
         isRef6={true}
+        isDisable={setDisabled}
         onDone={() => {
           setDisabled(false);
         }}
@@ -78,7 +79,7 @@ export function Otp() {
   );
 }
 
-function SubOtpBox({ reference, onDone, onBack, isRef6 }) {
+function SubOtpBox({ reference, onDone, onBack, isRef6, setDisabled }) {
   const [inputBoxVal, setInputBoxVal] = useState("");
 
   return (
