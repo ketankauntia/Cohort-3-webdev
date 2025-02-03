@@ -1,10 +1,9 @@
-remove .git from the subfolder.
+0. remove .git from the subfolder.
 
-in main directory,
-1. set master & check branch & commits
+
+1. set master & check branch & commits in main directory(not mandatory)
 
     git push --set-upstream origin master
-
     git branch -vv
 
 2. Remove the Folder from Git's Cache//
