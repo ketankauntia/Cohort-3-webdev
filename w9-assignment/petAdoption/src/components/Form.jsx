@@ -11,14 +11,22 @@ function Form() {
   function submitFormData(e) {
     e.preventDefault();
     // console.log(petNameRef.current.value);
+
+    const newPetData = { petName, petType, petBreed, yourName, email, phoneNumber };
+    console.log(newPetData);
   }
 
   return (
-    <form className='form-container'>
+    <form className='form-container' onSubmit={submitFormData}>
       <div>Pet Name</div>
-      <input placeholder='Pet Name' required />
+      <input
+        value={petName}
+        onChange={(e) => setPetName(e.target.value)}
+        placeholder='Pet Name'
+        required
+      />
       <div>Pet Type</div>
-      <select>
+      <select value={petType} onChange={(e) => setPetType(e.target.value)}>
         <option>German Shephar</option>
         <option>Military</option>
         <option>Doberman</option>
@@ -26,16 +34,34 @@ function Form() {
         <option>Bulldog</option>
       </select>
       <div>Breed</div>
-      <input placeholder='Breed' required />
+      <input
+        value={petBreed}
+        onChange={(e) => setPetBreed(e.target.value)}
+        placeholder='Breed'
+        required
+      />
       <div>Your Name</div>
-      <input placeholder='Your Name' required />
+      <input
+        value={yourName}
+        onChange={(e) => setYourName(e.target.value)}
+        placeholder='Your Name'
+        required
+      />
       <div>Email</div>
-      <input placeholder='Email' required />
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder='Email'
+        required
+      />
       <div>Phone Number</div>
-      <input placeholder='Phone Number' required />
-      <button onClick={submitFormData} type='submit'>
-        Submit
-      </button>
+      <input
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+        placeholder='Phone Number'
+        required
+      />
+      <button type='submit'>Submit</button>
     </form>
   );
 }

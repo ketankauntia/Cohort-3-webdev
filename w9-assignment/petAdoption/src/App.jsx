@@ -7,6 +7,14 @@ import Table from './components/Table';
 function App() {
   const [option, setOption] = useState(0);
   const [data, setData] = useState([]);
+  const [petTableData, setPetTableData] = useState([]);
+
+  const [petName, setPetName] = useState('');
+  const [petType, setPetType] = useState('German Shepherd');
+  const [petBreed, setPetBreed] = useState('');
+  const [yourName, setYourName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   function toggleToHeader() {
     return setOption(0);
