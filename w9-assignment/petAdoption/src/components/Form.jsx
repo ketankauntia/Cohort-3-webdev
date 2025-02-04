@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './Form.css';
-function Form() {
+function Form({ setPetTableData }) {
   const [petName, setPetName] = useState('');
   const [petType, setPetType] = useState('German Shepherd');
   const [petBreed, setPetBreed] = useState('');
@@ -11,9 +11,9 @@ function Form() {
   function submitFormData(e) {
     e.preventDefault();
     // console.log(petNameRef.current.value);
-
+    console.log(e);
     const newPetData = { petName, petType, petBreed, yourName, email, phoneNumber };
-    console.log(newPetData);
+    setPetTableData((prev) => [...prev, newPetData]);
   }
 
   return (

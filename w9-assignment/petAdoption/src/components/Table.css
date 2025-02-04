@@ -8,3 +8,11 @@
   color: white;
   margin: 10px;
 }
+
+.table-container {
+  margin: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

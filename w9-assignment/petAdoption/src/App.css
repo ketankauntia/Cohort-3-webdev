@@ -1,0 +1,15 @@
+.select-option button {
+  background-color: antiquewhite;
+  padding: 8px;
+  margin: 6px 6px 0 6px;
+}
+.select-option,
+.body-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+.body-container {
+  padding-top: 0;
+}

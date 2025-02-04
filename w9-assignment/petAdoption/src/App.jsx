@@ -9,17 +9,10 @@ function App() {
   const [data, setData] = useState([]);
   const [petTableData, setPetTableData] = useState([]);
 
-  const [petName, setPetName] = useState('');
-  const [petType, setPetType] = useState('German Shepherd');
-  const [petBreed, setPetBreed] = useState('');
-  const [yourName, setYourName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-
-  function toggleToHeader() {
+  function toggleToForm() {
     return setOption(0);
   }
-  function toggleToForm() {
+  function toggleToTable() {
     return setOption(1);
   }
 
@@ -27,15 +20,23 @@ function App() {
     setData([...data, newData]);
   }
 
+  function handleGoBack() {
+    setOption(0);
+  }
+
   return (
     <div>
       <Header />
       <div className='select-option'>
-        <button onClick={toggleToHeader}>Header</button>
-        <button onClick={toggleToForm}>Form</button>
+        <button onClick={toggleToForm}>Fill Form</button>
+        <button onClick={toggleToTable}>check Table</button>
       </div>
       <div className='body-container'>
-        {option === 0 ? <Form onSubmit={handleFormSubmission} /> : <Table data={data} />}
+        {option === 0 ? (
+          <Form setPetTableData={setPetTableData} onSubmit={handleFormSubmission} />
+        ) : (
+          <Table petTableData={petTableData} handleGoBack={handleGoBack} data={data} />
+        )}
       </div>
     </div>
   );
