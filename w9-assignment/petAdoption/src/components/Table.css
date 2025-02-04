@@ -1,0 +1,10 @@
+.real-table {
+  border: 1px solid black;
+  width: 100%;
+}
+.table-container button {
+  padding: 10px 14px;
+  background-color: green;
+  color: white;
+  margin: 10px;
+}
