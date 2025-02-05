@@ -70,9 +70,21 @@ const Timer = () => {
 
   //Now that we can enter edit mode when clicking on a time field, we need a function to update the value as the user types.
   const handleInputChange = (value) => {
+    // Allow only numbers and max 2 digits
     if (/^\d{0,2}$/.test(value)) {
-      setEditState((prevState) => ({ ...prevState, value })); //Updates only the value while keeping the same field.
+      // Prevents minutes/seconds from exceeding 59
+      // If the user tries entering 75 in minutes/seconds, it won’t allow it.
+      if (editState.field !== 'hours' && parseInt(value) > 59) {
+        return;
+      }
+      setEditState((prevState) => ({ ...prevState, value })); // Update only the value
     }
+  };
+
+  const handleReset = () => {
+    setIsRunning(false); // Stop the timer if running
+    setTime(0); // Reset time to 0
+    setEditState({ field: null, value: '' }); // Reset edit state
   };
 
   return (
@@ -127,7 +139,9 @@ const Timer = () => {
           {isRunning ? 'Pause' : 'Start'}
         </button>
 
-        <button className={style.actionButton}>Reset</button>
+        <button className={style.actionButton} onClick={handleReset}>
+          Reset
+        </button>
       </div>
     </div>
   );
