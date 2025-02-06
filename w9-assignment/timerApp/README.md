@@ -1,5 +1,7 @@
 # Timer App in React
 
+![alt text](image.png)
+
 Most imp part that i learnt
 Understanding editState.field
 We need a way to track which part of the time (hours, minutes, or seconds) is currently being edited. For that, we'll use a state variable called editState.

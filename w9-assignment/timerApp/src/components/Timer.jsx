@@ -61,7 +61,12 @@ const Timer = () => {
       //else → Entering Edit Mode
 
       //pausing timer
-      startPauseTimer();
+      // startPauseTimer();
+
+      // when edit is entered, if it is running, then we pause it.
+      if (isRunning) {
+        setIsRunning(false);
+      }
 
       //getting the field which is being edited (h/m/s) and getting its corresposnding value from object.. and then updating state
       setEditState({ field, value: formatTime(time)[field] }); // arr[i]
@@ -87,6 +92,10 @@ const Timer = () => {
     setEditState({ field: null, value: '' }); // Reset edit state
   };
 
+  useEffect(() => {
+    document.documentElement.style.setProperty('--progress', `${(time % 60) * (100 / 60)}%`);
+  }, [time]);
+
   return (
     <div className={style.timerApp}>
       <div className={style.timerDisplay}>
@@ -102,6 +111,8 @@ const Timer = () => {
                 value={editState.value}
                 onChange={(e) => handleInputChange(e.target.value)}
                 onBlur={() => handleEditField('hours')}
+                className={style.timeInput}
+                onFocus={(e) => e.target.select()} // Auto-select  preexisting input text when clicked for edit
                 autoFocus
               />
             ) : (
@@ -114,6 +125,8 @@ const Timer = () => {
                 value={editState.value}
                 onChange={(e) => handleInputChange(e.target.value)}
                 onBlur={() => handleEditField('minutes')}
+                className={style.timeInput}
+                onFocus={(e) => e.target.select()} // Auto-select  preexisting input text when clicked for edit
                 autoFocus
               />
             ) : (
@@ -126,6 +139,8 @@ const Timer = () => {
                 value={editState.value}
                 onChange={(e) => handleInputChange(e.target.value)}
                 onBlur={() => handleEditField('seconds')}
+                className={style.timeInput}
+                onFocus={(e) => e.target.select()} // Auto-select  preexisting input text when clicked for edit
                 autoFocus
               />
             ) : (
@@ -139,7 +154,7 @@ const Timer = () => {
           {isRunning ? 'Pause' : 'Start'}
         </button>
 
-        <button className={style.actionButton} onClick={handleReset}>
+        <button className={style.actionButton} onClick={handleReset} disabled={time === 0}>
           Reset
         </button>
       </div>
