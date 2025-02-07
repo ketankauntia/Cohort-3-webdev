@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from './AuthSystem';
+const Home = ({ username: propUsername }) => {
+  const contextValue = useContext(AuthContext);
 
-const Home = () => {
+  const displayUsername = contextValue?.username ?? propUsername;
   return (
     <div>
-      <h1>Welcome to the Auth System Demo</h1>
+      <h1>Welcome {displayUsername}, to the Auth System Demo</h1>
       <div>
         <p>THis demo showcases two approaches to managing authentication state in React:</p>
         <ul>

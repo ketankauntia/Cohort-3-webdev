@@ -14,21 +14,13 @@ import Login from './components/Login';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState('');
+  const [username, setUsername] = useState('');
 
   return (
     <div className='app-container'>
-      <AppBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} loginData={loginData} />
+      <AppBar username={loginData} isLoggedIn={loggedIn} logout={() => setLoggedIn(false)} />
       <AuthSystem />
-      {loggedIn ? (
-        <Home />
-      ) : (
-        <Login
-          loggedIn={loggedIn}
-          setLoggedIn={setLoggedIn}
-          loginData={loginData}
-          setLoginData={setLoginData}
-        />
-      )}
+      {loggedIn ? <Home username={username} /> : ''}
     </div>
   );
 }

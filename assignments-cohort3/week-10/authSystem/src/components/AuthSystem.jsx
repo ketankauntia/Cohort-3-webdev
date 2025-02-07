@@ -1,4 +1,7 @@
 import React, { createContext, useState } from 'react';
+import AppBar from './AppBar';
+import Home from './Home';
+import Login from './Login';
 
 export const AuthContext = createContext(undefined);
 
@@ -23,25 +26,26 @@ const AuthSystem = () => {
   return (
     <AuthContext.Provider value={contextValue}>
       <div>
-        <AppBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} loginData={loginData} />
-        <div>
-          <input
-            type='checkbox'
-            checked={useContextApi}
-            onChange={(e) => setUseContextApi(e.target.checked)}
-          />
-          <span>Use Context API: {useContextApi ? 'On' : 'Off'}</span>
+        {/* <AppBar username={username} isLoggedIn={isLoggedIn} logout={logout} /> */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: '1rem',
+            backgroundColor: '#f0f0f0',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type='checkbox'
+              checked={useContextApi}
+              onChange={(e) => setUseContextApi(e.target.checked)}
+            />
+            <span>Use Context API: {useContextApi ? 'On' : 'Off'}</span>
+          </div>
         </div>
-        {loggedIn ? (
-          <Home />
-        ) : (
-          <Login
-            loggedIn={loggedIn}
-            setLoggedIn={setLoggedIn}
-            loginData={loginData}
-            setLoginData={setLoginData}
-          />
-        )}
+        {isLoggedIn ? <Home username={username} /> : <Login onLogin={login} />}
       </div>
     </AuthContext.Provider>
   );

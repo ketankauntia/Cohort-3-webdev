@@ -1,20 +1,26 @@
 import React from 'react';
 import '../App.css';
-import { AuthContext } from './AuthSystem';
 import { useContext } from 'react';
+import { AuthContext } from './AuthSystem';
 
-const AppBar = ({ loggedIn, setLoggedIn, loginData }) => {
-  const toggleInOut = () => {
-    setLoggedIn((prevLogin) => !loggedIn);
-  };
+const AppBar = ({ username: propUsername, isLoggedIn: propIsLoggedIn, logout: propLogout }) => {
+  const contextValue = useContext(AuthContext); // accessing context values
+
+  const displayUsername = contextValue?.username ?? propUsername;
+  const displayIsLoggedIn = contextValue?.isLoggedIn ?? propIsLoggedIn;
+  const handleLogout = contextValue?.logout ?? propLogout;
+
+  // const toggleInOut = () => {
+  //   setLoggedIn((prevLogin) => !loggedIn);
+  // };
   // console.log(`loginData : ${loginData}`);
   return (
     <div className='app-bar'>
       <h1>Auth System Demo</h1>
-      {loggedIn ? (
+      {displayIsLoggedIn ? (
         <div className='user-section'>
-          <div>Welcome, {loginData}!</div>
-          <button onClick={toggleInOut}>Logout</button>
+          <div>Welcome, {displayUsername}!</div>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         <div className='user-section'>

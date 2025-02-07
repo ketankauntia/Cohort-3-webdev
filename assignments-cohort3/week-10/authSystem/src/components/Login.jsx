@@ -1,28 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from './AuthSystem';
 
-const Login = ({ loggedIn, setLoggedIn, loginData, setLoginData }) => {
-  const collectLoginDetails = () => {
-    if (loginData.trim() !== '') {
-      setLoggedIn(true);
-      // setLoginData('');
+const Login = ({ onLogin: propOnLogin }) => {
+  const [username, setUsername] = useState('');
+  const contextValue = useContext(AuthContext);
+
+  // Extract login function and authentication state from context
+  const { login, isAuthenticated } = contextValue || {};
+
+  const handleLogin = () => {
+    if (login) {
+      login(username);
+    } else if (propOnLogin) {
+      propOnLogin(username);
     }
+    setUsername('');
   };
 
   return (
     <div className='login-form'>
       <div className='form-group'>
-        {!loggedIn ? (
+        {!isAuthenticated ? (
           <div>
             <input
               type='text'
               placeholder='username here..'
-              value={loginData}
-              onChange={(e) => setLoginData(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
-            <button onClick={collectLoginDetails}>Login</button>
+            <button onClick={handleLogin}>Login</button>
           </div>
         ) : (
-          ''
+          <p>You are logged in!</p>
         )}
       </div>
     </div>
