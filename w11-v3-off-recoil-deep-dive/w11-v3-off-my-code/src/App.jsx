@@ -6,6 +6,7 @@ import {
   messagingAtom,
   networkAtom,
   notificationsAtom,
+  totalNotificationSelector,
 } from "./atoms";
 
 function App() {
@@ -17,11 +18,18 @@ function App() {
 }
 
 function MyApp() {
+
+  //using atoms
   const networkNotificationCount = useRecoilValue(networkAtom);
   // const messageAtomCount = useRecoilValue(messagingAtom);
   const jobsAtomCount = useRecoilValue(jobsAtom);
   const notificationAtomCount = useRecoilValue(notificationsAtom);
   const [messageAtomCount, setMessageAtomCount] = useRecoilState(messagingAtom);
+
+
+
+  //using selector
+  const totalNotificationCount = useRecoilValue(totalNotificationSelector)
 
   return (
     <>
@@ -33,7 +41,7 @@ function MyApp() {
       <button>Jobs ( )</button>
       <button>Network ( )</button>
       <button>Messages ( {messageAtomCount})</button>
-      <button>Me</button>
+      <button>Me {totalNotificationCount}</button>
       {/* <button onClick={()=>setMessageAtomCount(messageAtomCount+1)}>Me</button> */}
     </>
   );
