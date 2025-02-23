@@ -1,0 +1,32 @@
+.order-sum-cont{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: white;
+    border: 1px solid black;
+    margin: 1rem 1rem ;
+    border-radius: 5px;
+    min-width: 15rem;
+    /* width: fit-content; */
+}
+
+.order{
+    display: flex;
+    padding: 1rem .2rem;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.order-first{
+    border-bottom: 1px solid black;
+    /* padding: 1rem; */
+    font-weight: 300;
+}
+.order-btn{
+    width: 10rem;
+    padding: 1rem;
+    background-color: rgb(238, 206, 64);
+    border-radius: 0.2rem;
+    border: none;
+    cursor: pointer;
+}

@@ -1,0 +1,7 @@
+.shop-cart-cont{
+    display: flex;
+    justify-content:space-evenly;
+    background-color: rgb(227, 225, 224);
+    flex-grow: 1;
+    align-items: flex-start;
+}

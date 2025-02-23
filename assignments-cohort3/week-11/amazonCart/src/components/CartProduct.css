@@ -1,0 +1,38 @@
+.cart-product-single{
+    display: flex;
+    padding-bottom: 1.2rem;
+}
+
+.cart-img{
+    height: 4rem;
+    width: 4rem;
+    border: 1px solid black;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+.cart-data{
+    display: flex;
+    min-width: 35rem;
+    border: 1px solid black;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-data button{
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem;
+    background-color: rgb(238, 206, 64);
+    border-radius: 0.2rem;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-info{}
+.cart-add-del{
+    display: flex;
+    align-items: center;
+}
+
+.cart-data-price{
+    margin-right: 1.2rem;
+}

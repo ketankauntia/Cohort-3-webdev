@@ -1,0 +1,20 @@
+.nav-cont{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 1.2rem 2.2rem;
+    color: white;
+    background-color: rgb(12, 12, 52);
+}
+
+.nav-logo{
+
+}
+
+.nav-btn-cart{
+    padding: 0.5rem 1.5rem;
+    background-color: rgb(238, 206, 64);
+    border-radius: 0.2rem;
+    border: none;
+    cursor: pointer;
+}

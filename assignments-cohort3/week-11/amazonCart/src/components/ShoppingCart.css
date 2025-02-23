@@ -1,0 +1,9 @@
+.cart-cont{
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    margin: 1rem 0 1rem 0.5rem ;
+    border-radius: 5px;
+}
