@@ -4,6 +4,7 @@ import {RecoilRoot} from "recoil"
 import Navbar from './components/Navbar'
 import ShoppingPage from './components/ShoppingPage'
 import PurchaseModal from './components/PurchaseModal'
+import ProductPage from './components/ProductPage'
 
 
 function App() {
@@ -15,9 +16,10 @@ function App() {
         <div className="app-container">
           <Navbar />
           {/* <ShoppingPage /> */}
-          <div className="pr-modal-cont">
+          <ProductPage/>
+          {/* <div className="pr-modal-cont">
             <PurchaseModal />
-          </div>
+          </div> */}
         </div>
       </RecoilRoot>
     </>

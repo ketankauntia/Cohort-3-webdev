@@ -1,0 +1,35 @@
+.prod-card{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin: 0.4rem;
+    border-radius: 0.2rem;
+}
+
+.prod-image{
+    width: 17rem;
+    height: 17rem;
+    background-color: green;
+}
+.prod-title{
+    font-size: larger;
+    font-weight: 600;
+    padding: .4rem;
+}
+
+
+.prod-price{
+    font-weight: 500;
+    padding: .4rem;
+}
+.prod-btn{
+    width: auto;
+    padding: 0.5rem 1rem; 
+    background-color: rgb(238, 206, 64);
+    border-radius: 0.2rem;
+    border: none;
+    cursor: pointer;
+    margin: 0.2rem;
+    justify-content: center;
+    align-items: center;
+}
