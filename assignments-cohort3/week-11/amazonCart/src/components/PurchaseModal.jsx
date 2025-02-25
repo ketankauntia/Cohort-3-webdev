@@ -1,17 +1,19 @@
-import React from 'react'
-import './PurchaseModal.css'
+import React from "react";
+import "./PurchaseModal.css";
 
-function PurchaseModal() {
+function PurchaseModal({ totalPrice, onClose }) {
   return (
-    <div className='pr-model'>
-        <div>Purchase Succesfull</div>
+    <div className="pr-model">
+      <div>Purchase Succesfull</div>
 
-        <div>TickICON</div>
-        <div>Thank you for your purchase. Your order has been succesfully processed.</div>
-        <div>Total Amount: Rs.3783</div>
-        <button>Close</button>
+      <div>TickICON</div>
+      <div>
+        Thank you for your purchase. Your order has been succesfully processed.
+      </div>
+      <div>Total Amount: Rs.{totalPrice}</div>
+      <button onClick={onClose}>Close</button>
     </div>
-  )
+  );
 }
 
-export default PurchaseModal
+export default PurchaseModal;

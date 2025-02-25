@@ -9,10 +9,10 @@ export const cartTotalSelector = selector({
     const total = cartItems.reduce(
       (acc, item) => {
         acc.totalPrice += item.price * item.quantity;
-        acc.totalCount += item.quantity;
+        acc.totalItems += item.quantity;
         return acc;
       },
-      { totalprice: 0, totalItems: 0 }
+      { totalPrice: 0, totalItems: 0 }
     );
 
     return total;

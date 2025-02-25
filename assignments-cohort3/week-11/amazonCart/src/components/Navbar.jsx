@@ -9,8 +9,8 @@ function Navbar() {
   const totalCartItems = 0;
   return (
     <div className="nav-cont">
-      <Link to="/">
-        <div className="-nav-logo">AMAZON.com</div>
+      <Link to="/" className="nav-logo">
+        AMAZON.com
       </Link>
       <Link to="/cart">
         <button className="nav-btn-cart" onClick={() => {}}>
