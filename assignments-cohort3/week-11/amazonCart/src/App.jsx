@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { RecoilRoot } from "recoil";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ShoppingPage from "./components/ShoppingPage";
 import PurchaseModal from "./components/PurchaseModal";
@@ -12,14 +13,18 @@ function App() {
   return (
     <>
       <RecoilRoot>
-        <div className="app-container">
-          <Navbar />
-          <ShoppingPage />
-          <ProductPage />
-          {/* <div className="pr-modal-cont">
+        <Router>
+          <div className="app-container">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<ProductPage />} />
+              <Route path="/cart" element={<ShoppingPage />} />
+            </Routes>
+            {/* <div className="pr-modal-cont">
             <PurchaseModal />
-          </div> */}
-        </div>
+            </div> */}
+          </div>
+        </Router>
       </RecoilRoot>
     </>
   );
