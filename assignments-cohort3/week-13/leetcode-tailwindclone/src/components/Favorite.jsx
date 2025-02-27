@@ -51,15 +51,15 @@ function Favorite() {
             Attempting
           </div>
           <div className="progress-block-2 flex flex-col">
-            <div className=" rounded-md p-4 flex flex-col items-center mx-2 my-1 bg-bgDark3 mt-2">
+            <div className=" rounded-md p-4 flex flex-col items-center mx-2 my-1 bg-bgDark3 mt-2 text-green-300">
               <div>Easy</div>
               <div>11/11</div>
             </div>
-            <div className="rounded-md p-4 flex flex-col items-center mx-2 my-1 bg-bgDark3">
+            <div className="rounded-md p-4 flex flex-col items-center mx-2 my-1 bg-bgDark3 text-yellow-300">
               <div>Medium</div>
               <div>21/21</div>
             </div>
-            <div className=" rounded-md p-4 flex flex-col items-center mx-2 my-1 bg-bgDark3 mb-2">
+            <div className=" rounded-md p-4 flex flex-col items-center mx-2 my-1 bg-bgDark3 mb-2 text-red-400">
               <div>Hard</div>
               <div>9/9</div>
             </div>
