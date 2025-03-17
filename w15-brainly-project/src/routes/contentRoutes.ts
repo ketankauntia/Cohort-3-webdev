@@ -1,14 +1,15 @@
 import express, { Router } from "express";
 import contentModel from "../models/ContentModel";
-
+import { authMiddleware } from "../middlewares/authMiddleware";
+import { Request,Response } from "express";
 const contentRouter = express.Router();
 
-contentRouter.post('/api/v1/content', async (req,res)=>{
+contentRouter.post('/api/v1/content', authMiddleware, async (req:Request,res:Response)=>{
     
     try{
         // cannot take userId from body since, A malicious user could send a request with a different userId, creating content for another user.
         const {link, type, title, tags} = req.body;
-        const userId = req.user.id;
+        const userId = req.user!.id;
 
         if(!link || !type || !title ){
             res.status(201).json({
@@ -32,9 +33,9 @@ contentRouter.post('/api/v1/content', async (req,res)=>{
     }
 })
 
-contentRouter.get('/api/v1/content', async (req,res)=>{
+contentRouter.get('/api/v1/content',authMiddleware, async (req,res)=>{
     try{
-        const userId = req.user.id;
+        const userId = req.user;
         const fetchedContent = await contentModel.find({userId}).populate("tags");
         // .populate("tags") for full details of the tags instead of just the ObjectIds.
 
@@ -46,11 +47,11 @@ contentRouter.get('/api/v1/content', async (req,res)=>{
     }
 });
 
-contentRouter.delete('/api/v1/content', async (req,res)=>{
+contentRouter.delete('/api/v1/content',authMiddleware, async (req,res)=>{
 
     try{
         const {contentId} = req.body;
-        const userId = req.user.id;
+        const userId = req.user!.id;
 
         const foundContent = await contentModel.findById(contentId);
 
@@ -61,13 +62,21 @@ contentRouter.delete('/api/v1/content', async (req,res)=>{
             return;
         }
 
-        if(foundContent.userId.toString() !== userId){
+        if(foundContent.userId?.toString() !== userId){
             res.status(403).json({
                 message:"dont try to delete someone else's content. You cheeky little ************"
             })
         }
 
-        await foundContent.findByIdAndDelete(contentId);
+        await foundContent.findOneAndDelete({id: contentId});
+
+
+        // await contentModel.deleteOne({
+        //     contentId,
+        //     userId:req.userId
+        // })
+
+
         res.status(200).json({
             message:"deleted succesfully"
         })
