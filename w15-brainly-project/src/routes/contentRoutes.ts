@@ -1,90 +1,81 @@
 import express, { Router } from "express";
 import contentModel from "../models/ContentModel";
 import { authMiddleware } from "../middlewares/authMiddleware";
-import { Request,Response } from "express";
+import { Request, Response } from "express";
 const contentRouter = express.Router();
+import "./types/express";
 
-contentRouter.post('/api/v1/content', authMiddleware, async (req:Request,res:Response)=>{
-    
-    try{
-        // cannot take userId from body since, A malicious user could send a request with a different userId, creating content for another user.
-        const {link, type, title, tags} = req.body;
+contentRouter.post('/content', authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const { link, type, title, tags } = req.body;
         const userId = req.user!.id;
 
-        if(!link || !type || !title ){
+        if (!link || !type || !title) {
             res.status(201).json({
-                message:"incomplete content. Fill all details"
-            })
+                message: "incomplete content. Fill all details"
+            });
             return;
         }
 
         const newContent = new contentModel({
             link, type, title, tags, userId
-        })
+        });
 
         await newContent.save();
         res.status(200).json({
-            message:"content saved"
-        })
+            message: "content saved"
+        });
         return;
-
-    } catch(e){
-        res.status(500).json({ error:e, message: "Error adding content." });
-    }
-})
-
-contentRouter.get('/api/v1/content',authMiddleware, async (req,res)=>{
-    try{
-        const userId = req.user;
-        const fetchedContent = await contentModel.find({userId}).populate("tags");
-        // .populate("tags") for full details of the tags instead of just the ObjectIds.
-
-        res.status(200).json({fetchedContent});
-    } catch(e){
-        res.status(201).json({
-            message: "internal server error. Error fetching contents"
-        })
+    } catch (e) {
+        res.status(500).json({ error: e, message: "Error adding content." });
+        return;
     }
 });
 
-contentRouter.delete('/api/v1/content',authMiddleware, async (req,res)=>{
+contentRouter.get('/content', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user;
+        const fetchedContent = await contentModel.find({ userId }).populate("tags");
+        res.status(200).json({ fetchedContent });
+        return;
+    } catch (e) {
+        res.status(201).json({
+            message: "internal server error. Error fetching contents"
+        });
+        return;
+    }
+});
 
-    try{
-        const {contentId} = req.body;
+contentRouter.delete('/content', authMiddleware, async (req, res) => {
+    try {
+        const { contentId } = req.body;
         const userId = req.user!.id;
 
         const foundContent = await contentModel.findById(contentId);
 
-        if(!foundContent){
+        if (!foundContent) {
             res.status(404).json({
-                message:"no such course exists"
-            })
+                message: "no such course exists"
+            });
             return;
         }
 
-        if(foundContent.userId?.toString() !== userId){
+        if (foundContent.userId?.toString() !== userId) {
             res.status(403).json({
-                message:"dont try to delete someone else's content. You cheeky little ************"
-            })
+                message: "dont try to delete someone else's content. You cheeky little ************"
+            });
+            return;
         }
 
-        await foundContent.findOneAndDelete({id: contentId});
-
-
-        // await contentModel.deleteOne({
-        //     contentId,
-        //     userId:req.userId
-        // })
-
-
+        await contentModel.findOneAndDelete({ _id: contentId });
         res.status(200).json({
-            message:"deleted succesfully"
-        })
+            message: "deleted succesfully"
+        });
         return;
-
-    }catch(e){
+    } catch (e) {
         res.status(500).json({ message: "Error deleting content. Internal server error" });
+        return;
     }
 });
 
-
+export default contentRouter;
