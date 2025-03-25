@@ -6,10 +6,13 @@ import { Button } from "../components/Button";
 import { ShareIcon } from "../icons/ShareIcon";
 import { PlusIcon } from "../icons/PlusIcon";
 import { Card } from "../components/Card";
+import { useContent } from "../hooks/useContent";
 
-export function Dashboard(){
-    const [addModalOpen, setAddModalOpen] = useState(false);
+export function Dashboard() {
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
+  const contents = useContent() || [];
+
   return (
     <div>
       <ShareModal
@@ -23,52 +26,25 @@ export function Dashboard(){
       <div className="flex">
         <Sidebar />
         <div className="bg-slate-200">
-        <div className="flex justify-end mx-6 my-3">
-          <Button
-            variant="secondary"
-            text="Share Brain"
-            startIcon={<ShareIcon />}
-            onClick={() => setShareModalOpen(true)}
-          />
-          <Button
-            variant="primary"
-            text="Add Content"
-            startIcon={<PlusIcon />}
-            onClick={() => setAddModalOpen(true)}
-          />
-        </div>
-        <div className="flex flex-wrap">
-          <Card
-            title="My goal"
-            link="https://twitter.com/KauntiaKetan/status/1898956402132972014"
-            type="twitter"
-          />
-          <Card
-            title="Yt video to watch"
-            link="https://www.youtube.com/watch/P7vwvr8CXL4?si=vnF05PA9EVIJjcm6"
-            type="youtube"
-          />
-          <Card
-            title="My goal"
-            link="https://twitter.com/KauntiaKetan/status/1898956402132972014"
-            type="twitter"
-          />
-          <Card
-            title="Yt video to watch"
-            link="https://www.youtube.com/watch/P7vwvr8CXL4?si=vnF05PA9EVIJjcm6"
-            type="youtube"
-          />
-          <Card
-            title="My goal"
-            link="https://twitter.com/KauntiaKetan/status/1898956402132972014"
-            type="twitter"
-          />
-          <Card
-            title="Yt video to watch"
-            link="https://www.youtube.com/watch/P7vwvr8CXL4?si=vnF05PA9EVIJjcm6"
-            type="youtube"
-          />
-        </div>
+          <div className="flex justify-end mx-6 my-3">
+            <Button
+              variant="secondary"
+              text="Share Brain"
+              startIcon={<ShareIcon />}
+              onClick={() => setShareModalOpen(true)}
+            />
+            <Button
+              variant="primary"
+              text="Add Content"
+              startIcon={<PlusIcon />}
+              onClick={() => setAddModalOpen(true)}
+            />
+          </div>
+          <div className="flex flex-wrap">
+            {contents.map(({ type, link, title }) => 
+              <Card title={title} link={link} type={type} />
+            )}
+          </div>
         </div>
       </div>
     </div>
