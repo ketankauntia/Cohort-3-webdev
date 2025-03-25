@@ -2,11 +2,9 @@ import "express";
 
 declare global {
   namespace Express  {
-    interface Request {
+    export interface Request {
       user?: {id:string};
       // userId?: string;
     }
   }
 }
-
-export {};
