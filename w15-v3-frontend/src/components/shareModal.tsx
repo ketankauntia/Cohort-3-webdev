@@ -1,3 +1,5 @@
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 import { CloseIcon } from "../icons/CloseIcon";
 import { CopyIcon } from "../icons/CopyIcon";
 import { Button } from "./Button";
@@ -24,6 +26,21 @@ export function ShareModal({ open, onClose }) {
                 variant="primary"
                 text="Share Brain"
                 startIcon={<CopyIcon />}
+                onClick={async ()=>{
+                  const response = await axios.post(`${BACKEND_URL}/api/v1/brain/share`,{
+                    share:true
+                  },{
+                    headers:{
+                      Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                  });
+                  // console.log(response)
+                  const shareableURL = `http://localhost:5173${response.data.link}`;
+
+
+                  console.log(shareableURL);
+                  alert(`${shareableURL}`)
+                }}
               />
             </div>
             <div className="sharemodal-count ">3 items will be shared</div>

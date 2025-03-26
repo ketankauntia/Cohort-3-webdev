@@ -1,3 +1,5 @@
+// 3:11:38
+
 import { useRef, useState } from "react";
 import { CloseIcon } from "../icons/CloseIcon";
 import { Button } from "./Button";
@@ -39,6 +41,7 @@ export function AddContentModal({ open, onClose }) {
         },
       }
     );
+    onClose();
   }
 
   return (

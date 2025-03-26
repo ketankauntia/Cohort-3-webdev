@@ -3,6 +3,7 @@ import "./App.css";
 import { Dashboard } from "./pages/Dashboard";
 import { SignUp } from "./pages/Signup";
 import { Signin } from "./pages/Signin";
+import { SharedBrainDisplay } from "./pages/SharedBrainDisplay";
 
 function App() {
   return <BrowserRouter>
@@ -10,6 +11,8 @@ function App() {
       <Route path="/signup" element={<SignUp/>} />
       <Route path="/signin" element={<Signin/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/api/v1/brain/:shareid" element={<SharedBrainDisplay />} />
+
 
     </Routes>
   </BrowserRouter>
