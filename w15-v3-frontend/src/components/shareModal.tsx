@@ -38,7 +38,7 @@ export function ShareModal({ open, onClose }) {
                   const shareableURL = `http://localhost:5173${response.data.link}`;
 
 
-                  console.log(shareableURL);
+                  // console.log(shareableURL);
                   alert(`${shareableURL}`)
                 }}
               />

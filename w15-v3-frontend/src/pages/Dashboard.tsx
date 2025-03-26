@@ -12,7 +12,7 @@ import { BACKEND_URL } from "../config";
 export function Dashboard() {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
-  const {contents, refreshFeed} = useContent() || [];
+  const { contents, refreshFeed } = useContent() || [];
   // console.log(`contents : ${contents}`);
   // console.log(`GET ${BACKEND_URL}/api/v1/content`);
 
@@ -23,10 +23,9 @@ export function Dashboard() {
   //   console.log(`token : ${token}`);
   // }
 
-
-  useEffect(()=>{
+  useEffect(() => {
     refreshFeed();
-  }, [addModalOpen])
+  }, [addModalOpen]);
 
   return (
     <div>
@@ -57,8 +56,8 @@ export function Dashboard() {
           </div>
           <div className="flex flex-wrap">
             {/* <Card type="twitter" link="https://twitter.com/KauntiaKetan/status/1904837618535481844" title="random check hardcoded" /> : debugged.. needed to replace x.com with twitter.com to get the tweets going.  */}
-            {contents.map(({ type, link, title, index }) => (
-              <Card key={index} title={title} link={link} type={type} />
+            {contents.map(({ type, link, title, key }) => (
+              <Card key={key} title={title} link={link} type={type} />
             ))}
           </div>
         </div>

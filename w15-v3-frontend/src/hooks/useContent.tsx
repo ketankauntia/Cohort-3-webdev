@@ -18,6 +18,16 @@ export function useContent(){
         })
     }
 
+    function deleteContent(key: string) {
+        axios.delete(`${BACKEND_URL}/api/v1/content/${key}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }).then(() => {
+          setContents((prevContents) => prevContents.filter((content) => content.key !== key));
+        }).catch((error) => console.error("Delete error:", error));
+      }
+      
+    
+
     useEffect(()=>{
         refreshFeed();
 

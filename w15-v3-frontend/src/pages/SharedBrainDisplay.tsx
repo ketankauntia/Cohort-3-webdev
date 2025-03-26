@@ -6,15 +6,17 @@ import { Sidebar } from "../components/Sidebar";
 import { BACKEND_URL } from "../config";
 
 export function SharedBrainDisplay() {
-  const { shareid } = useParams(); 
+  const { shareid } = useParams();
   const [contents, setContents] = useState([]);
 
   useEffect(() => {
     async function fetchSharedBrain() {
       try {
         // const response = await axios.get(`${BACKEND_URL}/${shareid}`);
-        const response = await axios.get(`${BACKEND_URL}${shareid}`);
-
+        const response = await axios.get(
+          `${BACKEND_URL}/api/v1/brain/${shareid}`
+        );
+        console.log(`response : ${response}`);
 
         setContents(response.data.data || []);
       } catch (error) {
@@ -22,10 +24,10 @@ export function SharedBrainDisplay() {
       }
     }
 
-    if (shareid) fetchSharedBrain(); 
+    if (shareid) fetchSharedBrain();
   }, [shareid]);
 
-  console.log(`Shared Brain Link: ${shareid}`);
+//   console.log(`Shared Brain Link: ${shareid}`);
 
   return (
     <div className="flex">
@@ -34,9 +36,11 @@ export function SharedBrainDisplay() {
         <div className="font-bold text-lg mb-4">Viewing Shared Brain</div>
         <div className="cards-container flex flex-wrap">
           {contents.length > 0 ? (
-            contents.map(({ type, link, title }, index) => (
-              <Card key={index} title={title} link={link} type={type} />
-            ))
+            contents
+              .filter(({ title, link }) => title && link)
+              .map(({ type, link, title }, index) => (
+                <Card key={index} title={title} link={link} type={type} />
+              ))
           ) : (
             <p className="text-gray-500">No shared content found.</p>
           )}
