@@ -38,8 +38,10 @@ export function Dashboard() {
         onClose={() => setAddModalOpen(false)}
       />
       <div className="flex">
+        {/* <div className="w-1/3"> */}
         <Sidebar />
-        <div className="bg-slate-200">
+        {/* </div> */}
+        <div className="bg-slate-200 w-full">
           <div className="flex justify-end mx-6 my-3">
             <Button
               variant="secondary"
