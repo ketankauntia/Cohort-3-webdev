@@ -10,7 +10,8 @@ wss.on("connection", (socket) => {
         if (parsedMessage.type === 'join') {
             allSockets.push({
                 socket,
-                room: parsedMessage.payload.roomId
+                room: parsedMessage.payload.roomId,
+                username: parsedMessage.payload.username,
             });
         }
         // if wants to send msg, -> get roomid, then find all users from roomid and send
@@ -25,7 +26,10 @@ wss.on("connection", (socket) => {
             // now once the room id is know, iterating over [] and sending to all with the same roomId
             for (let i = 0; i < allSockets.length; i++) {
                 if (allSockets[i].room === foundRoomId) {
-                    allSockets[i].socket.send(parsedMessage.payload.message);
+                    allSockets[i].socket.send(JSON.stringify({
+                        message: parsedMessage.payload.message,
+                        username: parsedMessage.payload.username,
+                    }));
                 }
             }
         }

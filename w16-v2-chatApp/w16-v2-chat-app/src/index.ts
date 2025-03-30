@@ -7,6 +7,7 @@ const wss = new WebSocketServer({ port: 8080 });
 interface User{
     socket: WebSocket;
     room : string;
+    username: string;
 }
 
 let allSockets: User[] =[];
@@ -21,7 +22,8 @@ wss.on("connection", (socket)=>{
         if(parsedMessage.type === 'join'){
             allSockets.push({
                 socket,
-                room: parsedMessage.payload.roomId
+                room: parsedMessage.payload.roomId,
+                username: parsedMessage.payload.username,
             })
         }
 
@@ -39,7 +41,10 @@ wss.on("connection", (socket)=>{
             // now once the room id is know, iterating over [] and sending to all with the same roomId
             for(let i=0;i<allSockets.length;i++){
                 if(allSockets[i].room === foundRoomId){
-                    allSockets[i].socket.send(parsedMessage.payload.message);
+                    allSockets[i].socket.send(JSON.stringify({
+                        message: parsedMessage.payload.message,
+                        username: parsedMessage.payload.username,
+                      }));
                 }
             }
         }
