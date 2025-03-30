@@ -57,6 +57,9 @@ function App() {
         username:username,
       }
     }));
+
+    //@ts-ignore
+    inputRef.current.value = "";
   }
 
   return (
