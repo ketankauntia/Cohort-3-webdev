@@ -1,0 +1,17 @@
+{
+  "name": "w17-v1-postgres",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -b && node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/pg": "^8.11.11",
+    "pg": "^8.14.1",
+    "typescript": "^5.8.2"
+  }
+}
