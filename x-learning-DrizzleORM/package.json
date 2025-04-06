@@ -1,0 +1,22 @@
+{
+  "name": "x-learning-drizzleorm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.41.0",
+    "mysql2": "^3.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "drizzle-kit": "^0.30.6",
+    "tsx": "^4.19.3"
+  }
+}
