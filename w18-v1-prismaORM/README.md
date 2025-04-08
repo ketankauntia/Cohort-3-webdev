@@ -17,3 +17,10 @@ npx prisma init
 
     npx prisma generate
 ```
+
+For seeding data, add this to package.json,
+```
+    "prisma":{
+        "seed":"ts-node prisma/seed.ts"
+    },
+```

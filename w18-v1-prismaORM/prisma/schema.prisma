@@ -16,6 +16,7 @@ model User{
   password  String
   age       Int
   city      String
+  todos     Todos[]
 }
 
 model Todos{
@@ -24,4 +25,5 @@ model Todos{
   description   String
   done          Boolean
   userId        Int
+  user          User @relation(fields: [userId], references: [id])
 }
